@@ -29,7 +29,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                node('n2') {
+                node('n1') {
                     sh 'docker stop aws-rds |true'
                     sh 'docker rm aws-rds | true'
                     sh 'docker container run -dt -p 9092:8080 deepika2chebolu/aws-rds:${TAG}'
