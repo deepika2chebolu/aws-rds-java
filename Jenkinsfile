@@ -5,6 +5,16 @@ pipeline {
         TAG = "${DATE}.${BUILD_NUMBER}"
     }
     stages{
+        stage('compile') {
+            steps {
+                sh 'mvn validate compile'
+            }
+        }
+        stage('unit-testing') {
+            steps {
+                sh 'mvn test'
+            }
+        }
         stage('build') {
             steps {
                 sh 'mvn clean package'
@@ -32,7 +42,7 @@ pipeline {
                 node('n1') {
                     sh 'docker stop aws-rds |true'
                     sh 'docker rm aws-rds | true'
-                    sh 'docker container run -dt -p 9092:8080 deepika2chebolu/aws-rds:${TAG}'
+                    sh 'docker container run -dt -p 9091:8080 deepika2chebolu/aws-rds:${TAG}'
                 }
             }
         }
