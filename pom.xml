@@ -24,12 +24,7 @@
 			<version>4.10</version>
 		</dependency>
 	</dependencies>
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<url>http://13.41.54.238:8081/nexus/content/repositories/releases</url>
-		</repository>
-	<distributionManagement>
+	
 	<build>
 		<finalName>LoginWebApp</finalName>
 	</build>
