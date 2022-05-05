@@ -23,14 +23,13 @@
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
 		</dependency>
-		</dependency>
-		    <repository>
-			<id>releases</id>
-			<url>http://18.134.142.141:8081/nexus/content/repositories/releases</url>
-		    </repository>
-                </dependency>
 	 </dependencies>
-
+         <distributionManagement>
+             <repository>
+                <id>releases</id>
+                <url>http://18.212.75.122:8081/nexus/content/repositories/releases</url>
+             </repository>
+         </distributionManagement>
 	   <build>
 		<finalName>LoginWebApp</finalName>
 	</build>		
