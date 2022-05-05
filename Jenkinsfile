@@ -15,15 +15,19 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        
-        stage('releases') {
+        stage('sonar-analysis') {
             steps {
-                sh 'mvn clean package deploy'
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://13.40.199.221:9000 -Dsonar.login=a4321013c8b22e54b623b36963e04917c754c659'
             }
         }
         stage('build') {
             steps {
                 sh 'mvn clean package'
+            }
+        }
+        stage('releases') {
+            steps {
+                sh 'mvn clean package deploy'
             }
         }
         stage('Docker Build') {
