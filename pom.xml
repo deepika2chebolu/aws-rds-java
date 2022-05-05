@@ -29,7 +29,7 @@
 			<url>http://18.134.142.141:8081/nexus/content/repositories/releases</url>
 		    </repository>
                 </dependency>
-	</dependencies>
+	 </dependencies>
 
 	   <build>
 		<finalName>LoginWebApp</finalName>
