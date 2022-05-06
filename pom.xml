@@ -29,6 +29,7 @@
                 <id>releases</id>
                 <url>http://13.40.150.24:8081/nexus/content/repositories/releases</url>
              </repository>
+	 
          </distributionManagement>
 	   <build>
 		<finalName>LoginWebApp</finalName>
