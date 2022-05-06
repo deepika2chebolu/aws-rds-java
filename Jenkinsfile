@@ -22,14 +22,10 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh 'mvn clean package'
-            }
-        }
-        stage('releases') {
-            steps {
                 sh 'mvn clean package deploy'
             }
         }
+        
         stage('Docker Build') {
             steps {
                 script {
