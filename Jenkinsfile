@@ -1,8 +1,7 @@
 pipeline {
     agent any
       environment {
-        DATE = new Date().format('yy.M')
-        TAG = "${DATE}.${BUILD_NUMBER}"
+        registry = "072669763386.dkr.ecr.eu-west-2.amazonaws.com/my-repo"
     }
     stages{
         stage('compile') {
@@ -33,7 +32,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    docker.build("deepika2chebolu/aws-rds:${TAG}")
+                    dockerImage = docker.build registry
                 }
             }
         }
