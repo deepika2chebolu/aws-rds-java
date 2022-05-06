@@ -19,7 +19,7 @@ pipeline {
         stage('Docker push') {
             steps {
                 script {
-                    docker.withRegistry('https://072669763386.dkr.ecr.eu-west-2.amazonaws.com', 'ecr_credential') {
+                    docker.withRegistry('https://072669763386.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:eu-west-2:ecr_credential') {
                         docker.image('demo').push('latest')
                     }
                  }
