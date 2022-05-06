@@ -4,29 +4,9 @@ pipeline {
         registry = "072669763386.dkr.ecr.eu-west-2.amazonaws.com/my-repo"
     }
     stages{
-        stage('compile') {
+        stage('checkout') {
             steps {
-                sh 'mvn validate compile'
-            }
-        }
-        stage('unit-testing') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-        stage('sonar-analysis') {
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.host.url=http://35.177.21.220:9000 -Dsonar.login=1a4202d3c5cb019cd2b66ae21a9d9e784075073d'
-            }
-        }
-        stage('build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-        stage('publish-artifacts') {
-            steps {
-                sh 'mvn deploy'
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/deepika2chebolu/aws-rds-java.git']]])
             }
         }
         stage('Docker Build') {
@@ -36,24 +16,6 @@ pipeline {
                 }
             }
         }
-        stage('Pushing Docker Image to Dockerhub') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com','docker_credential') {
-                        docker.image("deepika2chebolu/aws-rds:${TAG}").push()
-                        docker.image("deepika2chebolu/aws-rds:${TAG}").push("latest")
-                    }
-                }
-            }
-        }
-        stage('deploy') {
-            steps {
-                node('n1') {
-                    sh 'docker stop aws-rds |true'
-                    sh 'docker rm aws-rds | true'
-                    sh 'docker container run -dt -p 9081:8080 deepika2chebolu/aws-rds:${TAG}'
-                }
-            }
-        }
+        
     }
 }    
