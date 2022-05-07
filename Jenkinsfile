@@ -12,7 +12,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    dockerImage = docker.build registry
+                    docker.build('ecr-1')
                 }
             }
         }
