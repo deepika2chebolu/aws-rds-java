@@ -1,27 +1,22 @@
 pipeline {
     agent any
-      environment {
-        registry = "072669763386.dkr.ecr.eu-west-2.amazonaws.com/ecr-1"
-    }
-    stages{
-        stage('checkout') {
+
+    stages {
+        stage('git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/deepika2chebolu/aws-rds-java.git']]])
+                git 'https://github.com/deepika2chebolu/aws-rds-java.git'
             }
         }
-        stage('Docker Build') {
+        stage('build') {
             steps {
-                script {
-                    docker.build('ecr-1')
-                }
+                sh 'mvn clean package'
             }
         }
-        stage('Docker push') {
+        stage('deploy') {
             steps {
-                script {
-                    docker.withRegistry('https://072669763386.dkr.ecr.eu-west-2.amazonaws.com', 'ecr:eu-west-2:ecr_credential') {
-                    docker.image('ecr-1').push('latest')
-                    }
+                sshagent(credentials:['n1']) {
+                    sh 'ssh -T -o StrictHostKeyChecking=no centos@54.237.84.250'
+                sh 'scp -r /var/lib/jenkins/workspace/PROJECT/target/*.war centos@54.237.84.250:/home/centos/apache-tomcat-7.0.94/webapps'
                 }
             }
         }
