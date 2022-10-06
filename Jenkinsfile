@@ -15,8 +15,8 @@ pipeline {
         stage('deploy') {
             steps {
                 sshagent(credentials:['n1']) {
-                    sh 'ssh -T -o StrictHostKeyChecking=no centos@54.237.84.250'
-                sh 'scp -r /var/lib/jenkins/workspace/PROJECT/target/*.war centos@54.237.84.250:/home/centos/apache-tomcat-7.0.94/webapps'
+                    sh 'ssh -T -o StrictHostKeyChecking=no centos@172.31.86.65'
+                sh 'scp -r /var/lib/jenkins/workspace/PROJECT/target/*.war centos@172.31.86.65:/home/centos/apache-tomcat-7.0.94/webapps'
                 }
             }
         }
